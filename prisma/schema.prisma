@@ -1,0 +1,49 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("POSTGRES_URL")
+}
+
+model Assembly {
+  id Int @id @default(autoincrement())
+  date String @unique
+  pregnant String
+  note String?
+  members Json
+
+  @@map("assemblies")
+}
+
+model Member {
+  id Int @id @default(autoincrement())
+  fullname String
+  pregnantTimes Int @default(0)
+  associated String
+  activeReprimands Int @default(0)
+  totalReprimands Int @default(0)
+  activeAbsences Int @default(0)
+  totalAbsences Int @default(0)
+  foodDebt Boolean @default(false)
+
+  @@map("members")
+}
+
+model Reprimand {
+  id Int @id @default(autoincrement())
+  fullname String
+  note String
+
+  @@map("reprimands")
+}
+
+model Law {
+  id Int @id @default(autoincrement())
+  name String
+  description String
+  
+  @@map("laws")
+}
