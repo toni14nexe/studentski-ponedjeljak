@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import prisma from "../../../prisma-client";
-import type { Assembly } from "@/app/types/assembly";
+import prisma from "@/api/prisma-client";
+import type { Assembly } from "@/types/assembly";
 
 export async function GET() {
   const assemblies = await prisma.assembly.findMany();

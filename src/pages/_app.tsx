@@ -1,12 +1,19 @@
 import { AppProps } from "next/app";
-import Layout from "../components/Layout";
-import "@/assets/style/index.scss";
+import Layout from "@/components/Layout/Layout";
+import "@mantine/core/styles.css";
+import { createTheme, MantineProvider } from "@mantine/core";
+
+const theme = createTheme({
+  fontFamily: "Open Sans, sans-serif",
+});
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <MantineProvider theme={theme}>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </MantineProvider>
   );
 }
 

@@ -1,0 +1,23 @@
+.headerContainer {
+  width: 100%;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  padding: 10px 2rem;
+  gap: 22px;
+  justify-content: space-around;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  flex-wrap: wrap;
+
+  .title {
+    color: #228be6;
+    text-shadow: 2px 2px 2px gray;
+    text-align: center;
+  }
+
+  .rightHeaderWrapper {
+    display: flex;
+    gap: 10px;
+  }
+}
