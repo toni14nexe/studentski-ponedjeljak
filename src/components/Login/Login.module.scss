@@ -1,0 +1,18 @@
+.loginContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 10px;
+
+  .input {
+    width: 250px;
+  }
+
+  .errorNotification {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    margin-left: 20px;
+  }
+}
