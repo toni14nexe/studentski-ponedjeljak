@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Assembly } from "@/types/assembly";
-import { LoadingOverlay, Button, Group, Box } from "@mantine/core";
+import { LoadingOverlay } from "@mantine/core";
 
 const Home = () => {
   const [assemblies, setAssemblies] = useState<Assembly[]>([]);

@@ -3,10 +3,12 @@ import { getHotkeyHandler } from "@mantine/hooks";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "@/store/store";
+import { useRouter } from "next/router";
 import style from "./Login.module.scss";
 
 const Login = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const [loginValue, setLoginValue] = useState({
     username: "",
@@ -28,6 +30,7 @@ const Login = () => {
       loginValue.password === process.env.NEXT_PUBLIC_LOGIN_PASSWORD
     ) {
       dispatch(loginSuccess());
+      router.push("/");
     } else {
       setShowErrorNotification(true);
       setLoginValue(() => ({

@@ -1,4 +1,4 @@
-import { configureStore, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, configureStore, createSlice } from "@reduxjs/toolkit";
 
 // Define initial state for authentication
 interface AuthState {
@@ -14,6 +14,10 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
+    setIsAuthenticated(state, action: PayloadAction<boolean>) {
+      state.isAuthenticated = action.payload;
+    },
+
     loginSuccess(state) {
       state.isAuthenticated = true;
 
@@ -23,19 +27,18 @@ const authSlice = createSlice({
       now.setTime(expirationTime);
 
       document.cookie = `authToken=${loginHash}; expires=${now.toUTCString()}; path=/`;
-      window.location.href = "/";
     },
+
     logout(state) {
       state.isAuthenticated = false;
       document.cookie =
         "authToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
-      window.location.href = "/";
     },
   },
 });
 
 // Export actions from slice
-export const { loginSuccess, logout } = authSlice.actions;
+export const { setIsAuthenticated, loginSuccess, logout } = authSlice.actions;
 
 // Configure store with auth slice reducer
 export const store = configureStore({
