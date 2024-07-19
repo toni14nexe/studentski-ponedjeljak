@@ -1,9 +1,13 @@
 import { Input, PasswordInput, Button, Notification } from "@mantine/core";
 import { getHotkeyHandler } from "@mantine/hooks";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "@/store/store";
 import style from "./Login.module.scss";
 
 const Login = () => {
+  const dispatch = useDispatch();
+
   const [loginValue, setLoginValue] = useState({
     username: "",
     password: "",
@@ -23,7 +27,7 @@ const Login = () => {
       loginValue.username === process.env.NEXT_PUBLIC_LOGIN_USERNAME &&
       loginValue.password === process.env.NEXT_PUBLIC_LOGIN_PASSWORD
     ) {
-      console.log("login");
+      dispatch(loginSuccess());
     } else {
       setShowErrorNotification(true);
       setLoginValue(() => ({

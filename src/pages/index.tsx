@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Assembly } from "@/types/assembly";
+import { LoadingOverlay, Button, Group, Box } from "@mantine/core";
 
 const Home = () => {
   const [assemblies, setAssemblies] = useState<Assembly[]>([]);
@@ -42,7 +43,14 @@ const Home = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading)
+    return (
+      <LoadingOverlay
+        visible={true}
+        overlayProps={{ backgroundOpacity: 0.5, color: "black" }}
+        loaderProps={{ type: "bars" }}
+      />
+    );
 
   return (
     <div>

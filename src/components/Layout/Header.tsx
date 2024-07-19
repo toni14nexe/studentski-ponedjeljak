@@ -1,12 +1,23 @@
 import { useRouter } from "next/router";
 import { Button } from "@mantine/core";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState, logout } from "@/store/store";
 import style from "./Header.module.scss";
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
   const router = useRouter();
   const goTo = (route: string) => (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     router.push(route);
+  };
+
+  const handleLoginLogoutButton = () => {
+    if (isAuthenticated) dispatch(logout());
+    else router.push("/login");
   };
 
   return (
@@ -16,8 +27,8 @@ const Header = () => {
         <Button size="xs" onClick={goTo("/")}>
           Naslovnica
         </Button>
-        <Button size="xs" onClick={goTo("/login")}>
-          Prijava
+        <Button size="xs" onClick={handleLoginLogoutButton}>
+          {isAuthenticated ? "Odjava" : "Prijava"}
         </Button>
       </div>
     </div>
