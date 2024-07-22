@@ -1,31 +1,46 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Input,
   Button,
   Select,
   MultiSelect,
   Notification,
+  LoadingOverlay,
 } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
-import { POST_assembly } from "@/services/assembliesService";
 import style from "./AddAssembly.module.scss";
 import { useRouter } from "next/router";
+import type { Member } from "@/types/member";
+import { POST_assembly } from "@/services/assembliesService";
 
 type FormData = {
   date: Date;
   pregnant: string;
   note: string;
-  members: string[];
+  members: Array<{
+    id: number;
+    fullname: string;
+    pregnant: boolean;
+    arrived: boolean;
+  }>;
+};
+
+type Option = {
+  value: string;
+  label: string;
 };
 
 const AddAssembly = () => {
   const router = useRouter();
-  const [form, setForm] = useState({
+  const [members, setMembers] = useState<Member[]>([]);
+  const [memberOptions, setMemberOptions] = useState<Option[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [form, setForm] = useState<FormData>({
     date: new Date(),
     pregnant: "",
     note: "",
-    members: [] as string[],
+    members: [],
   });
   const [notification, setShowNotification] = useState({
     show: false,
@@ -33,25 +48,44 @@ const AddAssembly = () => {
     color: "",
   });
 
+  useEffect(() => {
+    fetch("/api/members")
+      .then((response) => response.json())
+      .then((data) => {
+        setMembers(data);
+        setMemberOptions(
+          data.map((member: Member) => ({
+            value: member.id.toString(),
+            label: member.fullname,
+          }))
+        );
+        setLoading(false);
+      });
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const isValid = isFormDataValid(form);
 
-    // TODO convert members utoAssemblyMembers[] type (object array - all members):
-    // {
-    //  fullname: string
-    //  pregnant: boolean
-    //  arrived: boolean
-    // }[]
-
     if (isValid) {
-      const response = await POST_assembly({
-        date: form.date.toISOString(),
-        pregnant: form.pregnant,
-        note: form.note || "",
-        members: form.members,
-      });
+      const selectedMemberIds = form.members.map((member) => member.id);
+      const formattedMembers = members.map((member) => ({
+        id: member.id,
+        fullname: member.fullname,
+        pregnant: Number(form.pregnant) === member.id,
+        arrived: selectedMemberIds.includes(member.id),
+      }));
+
+      const response = await POST_assembly(
+        {
+          date: form.date.toISOString(),
+          pregnant: form.pregnant,
+          note: form.note || "",
+          members: formattedMembers,
+        },
+        members
+      );
 
       if (response.ok) router.push("/");
       else
@@ -95,9 +129,27 @@ const AddAssembly = () => {
     if (value !== null) setForm({ ...form, pregnant: value });
   };
 
-  const handleMultiSelectChange = (values: string[]) => {
-    setForm({ ...form, members: values });
+  const handleMultiSelectChange = (selectedIds: string[]) => {
+    const selectedMembers = members
+      .filter((member) => selectedIds.includes(member.id.toString()))
+      .map((member: any) => ({
+        id: member.id,
+        fullname: member.fullname,
+        pregnant: member.pregnant,
+        arrived: member.arrived,
+      }));
+
+    setForm({ ...form, members: selectedMembers });
   };
+
+  if (loading)
+    return (
+      <LoadingOverlay
+        visible={true}
+        overlayProps={{ backgroundOpacity: 0.5, color: "black" }}
+        loaderProps={{ type: "bars" }}
+      />
+    );
 
   return (
     <div className={style.addAssemblyContainer}>
@@ -118,14 +170,16 @@ const AddAssembly = () => {
             <IconChevronRight size={20} style={{ marginLeft: "10px" }} />
           }
         />
+
         <Select
           className={style.input}
           label="Nabebio *"
           placeholder="Nabebio"
-          data={["TK", "MM", "DM", "FB"]}
+          data={memberOptions}
           value={form.pregnant}
           onChange={handleSelectChange}
         />
+
         <Input.Wrapper className={style.input} label="Bilješka">
           <Input
             className={style.input}
@@ -135,14 +189,16 @@ const AddAssembly = () => {
             placeholder="Bilješka"
           />
         </Input.Wrapper>
+
         <MultiSelect
           className={style.input}
           label="Prisutni Članovi"
           placeholder={form.members.length ? "" : "Prisutni Članovi"}
-          data={["TK", "MM", "DM", "FB"]}
-          value={form.members}
+          data={memberOptions} // Use memberOptions
+          value={form.members.map((member) => member.id.toString())} // Set selected values as IDs
           onChange={handleMultiSelectChange}
         />
+
         <div className={style.buttonsContainer}>
           <Button size="xs" variant="outline" color="red">
             Odustani
