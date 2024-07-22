@@ -1,7 +1,7 @@
 import AddAssembly from "@/components/AddAssembly/AddAssembly";
 
-const LoginPage = () => {
+const AddAssemblyPage = () => {
   return <AddAssembly />;
 };
 
-export default LoginPage;
+export default AddAssemblyPage;

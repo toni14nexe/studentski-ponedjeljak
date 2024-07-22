@@ -10,3 +10,9 @@ export type Member = {
   totalAbsences: number;
   foodDebt: boolean;
 };
+
+export type PostMember = {
+  fullname: string;
+  birthday: string;
+  associated: string;
+};

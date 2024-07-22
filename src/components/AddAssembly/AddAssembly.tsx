@@ -19,7 +19,7 @@ type FormData = {
   members: string[];
 };
 
-const Home = () => {
+const AddAssembly = () => {
   const router = useRouter();
   const [form, setForm] = useState({
     date: new Date(),
@@ -88,15 +88,11 @@ const Home = () => {
   };
 
   const handleDateChange = (date: Date | null) => {
-    if (date) {
-      setForm({ ...form, date });
-    }
+    if (date) setForm({ ...form, date });
   };
 
   const handleSelectChange = (value: string | null) => {
-    if (value !== null) {
-      setForm({ ...form, pregnant: value });
-    }
+    if (value !== null) setForm({ ...form, pregnant: value });
   };
 
   const handleMultiSelectChange = (values: string[]) => {
@@ -177,4 +173,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default AddAssembly;
