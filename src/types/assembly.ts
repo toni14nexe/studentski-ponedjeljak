@@ -1,11 +1,21 @@
+export type AssemblyMember = {
+  id: number;
+  fullname: string;
+  pregnant: boolean;
+  arrived: boolean;
+};
+
 export type Assembly = {
   id: number;
   date: string;
   pregnant: string;
   note?: string;
-  members: Array<{
-    fullname: string;
-    pregnant: boolean;
-    arrived: boolean;
-  }>;
+  members: AssemblyMember[];
+};
+
+export type PostAssembly = {
+  date: string;
+  pregnant: string;
+  note?: string;
+  members: AssemblyMember[];
 };
