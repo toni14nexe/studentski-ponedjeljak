@@ -1,0 +1,28 @@
+.memberContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  row-gap: 22px;
+
+  .headerWrapper {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
+    gap: 22px;
+  }
+
+  .rowWithButton {
+    display: flex;
+    gap: 22px;
+  }
+
+  .activeDebt {
+    color: red;
+  }
+
+  .inactiveDebt {
+    color: lightgreen;
+  }
+}
