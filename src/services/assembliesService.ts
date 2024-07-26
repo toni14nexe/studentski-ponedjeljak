@@ -2,6 +2,12 @@ import type { PostAssembly } from "@/types/assembly";
 import type { Member } from "@/types/member";
 import { PUT_member } from "./membersService";
 
+export async function GET_assemblies() {
+  const response = await fetch("/api/assemblies");
+
+  return response;
+}
+
 export async function POST_assembly(
   assembly: PostAssembly,
   allMembers: Member[]

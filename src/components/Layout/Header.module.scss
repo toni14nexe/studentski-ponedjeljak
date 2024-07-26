@@ -14,10 +14,14 @@
     color: #228be6;
     text-shadow: 2px 2px 2px gray;
     text-align: center;
+    cursor: pointer;
   }
 
   .rightHeaderWrapper {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
     gap: 10px;
   }
 }

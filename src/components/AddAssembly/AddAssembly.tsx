@@ -13,6 +13,7 @@ import style from "./AddAssembly.module.scss";
 import { useRouter } from "next/router";
 import type { Member } from "@/types/member";
 import { POST_assembly } from "@/services/assembliesService";
+import { GET_allMembers } from "@/services/membersService";
 
 type FormData = {
   date: Date;
@@ -39,7 +40,7 @@ const AddAssembly = () => {
   const [form, setForm] = useState<FormData>({
     date: new Date(),
     pregnant: "",
-    note: "",
+    note: "Jebeš krmaču...",
     members: [],
   });
   const [notification, setShowNotification] = useState({
@@ -49,7 +50,7 @@ const AddAssembly = () => {
   });
 
   useEffect(() => {
-    fetch("/api/members")
+    GET_allMembers()
       .then((response) => response.json())
       .then((data) => {
         setMembers(data);
@@ -142,6 +143,10 @@ const AddAssembly = () => {
     setForm({ ...form, members: selectedMembers });
   };
 
+  const goToDashboard = () => {
+    router.back();
+  };
+
   if (loading)
     return (
       <LoadingOverlay
@@ -200,7 +205,12 @@ const AddAssembly = () => {
         />
 
         <div className={style.buttonsContainer}>
-          <Button size="xs" variant="outline" color="red">
+          <Button
+            size="xs"
+            variant="outline"
+            color="red"
+            onClick={goToDashboard}
+          >
             Odustani
           </Button>
           <Button size="xs" variant="outline" type="submit">

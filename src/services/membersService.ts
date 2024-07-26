@@ -12,7 +12,14 @@ export async function POST_member(member: PostMember) {
 
 export async function GET_allMembers() {
   const response = await fetch("/api/members", {
-    method: "GET",
+    headers: { "Content-Type": "application/json" },
+  });
+
+  return response;
+}
+
+export async function GET_member(id: string) {
+  const response = await fetch(`/api/members/${id}`, {
     headers: { "Content-Type": "application/json" },
   });
 

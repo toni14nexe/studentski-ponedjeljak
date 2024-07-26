@@ -14,6 +14,9 @@ const Header = () => {
     e.preventDefault();
     router.push(route);
   };
+  const titleGoTo = () => {
+    router.push("/");
+  };
 
   const handleLoginLogoutButton = () => {
     if (isAuthenticated) dispatch(logout());
@@ -22,10 +25,15 @@ const Header = () => {
 
   return (
     <div className={style.headerContainer}>
-      <h3 className={style.title}>Studentski Ponedjeljak</h3>
+      <h3 className={style.title} onClick={titleGoTo}>
+        Studentski Ponedjeljak
+      </h3>
       <div className={style.rightHeaderWrapper}>
         <Button size="xs" variant="outline" onClick={goTo("/")}>
           Naslovnica
+        </Button>
+        <Button size="xs" variant="outline" onClick={goTo("/members")}>
+          Članovi
         </Button>
         <Button size="xs" variant="outline" onClick={handleLoginLogoutButton}>
           {isAuthenticated ? "Odjava" : "Prijava"}

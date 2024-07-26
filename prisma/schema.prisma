@@ -12,7 +12,7 @@ model Assembly {
   id Int @id @default(autoincrement())
   date String @unique
   pregnant String
-  note String?
+  note String @default("Jebeš krmaču...")
   members Json
 
   @@map("assemblies")
