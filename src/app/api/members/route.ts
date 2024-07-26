@@ -3,7 +3,9 @@ import prisma from "@/app/api/prisma-client";
 import type { Member } from "@/types/member";
 
 export async function GET() {
-  const members = await prisma.member.findMany();
+  const members = await prisma.member.findMany({
+    orderBy: { fullname: "asc" },
+  });
   return NextResponse.json(members);
 }
 

@@ -1,0 +1,46 @@
+.mainWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+
+  .buttonContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 22px;
+    align-items: center;
+    justify-content: center;
+
+    .plusButton {
+      width: fit-content;
+      padding: 0 10px;
+    }
+  }
+}
+
+.membersContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+  gap: 8px;
+  row-gap: 8px;
+
+  .memberWrapper,
+  .memberButton {
+    width: 100%;
+  }
+
+  .buttonItemsContainer {
+    width: 100%;
+  }
+
+  .activeDebt {
+    color: green;
+  }
+
+  .inactiveDebt {
+    color: red;
+  }
+}
