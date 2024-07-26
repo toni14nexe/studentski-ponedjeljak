@@ -86,6 +86,10 @@ const AddMember = () => {
     if (associated) setForm({ ...form, associated });
   };
 
+  const goToDashboard = () => {
+    router.back();
+  };
+
   return (
     <div className={style.addMemberContainer}>
       <h1>Novi Sastanak</h1>
@@ -133,11 +137,16 @@ const AddMember = () => {
         />
 
         <div className={style.buttonsContainer}>
-          <Button size="xs" variant="outline" color="red">
+          <Button
+            size="xs"
+            variant="outline"
+            color="red"
+            onClick={goToDashboard}
+          >
             Odustani
           </Button>
           <Button size="xs" variant="outline" type="submit">
-            Dodaj Sastanak
+            Dodaj Člana
           </Button>
         </div>
       </form>

@@ -1,4 +1,4 @@
-import AddMember from "@/components/AddMember/AddMember";
+import AddMember from "@/components/Members/Add/AddMember";
 
 const AddMemberPage = () => {
   return <AddMember />;
