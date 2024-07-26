@@ -5,6 +5,7 @@ import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 import style from "./AddMember.module.scss";
 import { useRouter } from "next/router";
 import { POST_member } from "@/services/membersService";
+import { notifications } from "@mantine/notifications";
 
 type FormData = {
   fullname: string;
@@ -37,8 +38,14 @@ const AddMember = () => {
         associated: form.associated.toISOString(),
       });
 
-      if (response.ok) router.push("/");
-      else
+      if (response.ok) {
+        router.push("/");
+        notifications.show({
+          title: "Uspješno dodano",
+          message: "Novi član je uspješno dodan!",
+          color: "green",
+        });
+      } else
         setShowNotification({
           show: true,
           title: "Nešto je pošlo po krivu!",

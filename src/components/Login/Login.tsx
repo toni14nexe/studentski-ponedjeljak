@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { loginSuccess } from "@/store/store";
 import { useRouter } from "next/router";
 import style from "./Login.module.scss";
+import { notifications } from "@mantine/notifications";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -31,6 +32,11 @@ const Login = () => {
     ) {
       dispatch(loginSuccess());
       router.push("/");
+      notifications.show({
+        title: "Uspješna prijava",
+        message: "Uspješno ste se prijavili!",
+        color: "green",
+      });
     } else {
       setShowErrorNotification(true);
       setLoginValue(() => ({

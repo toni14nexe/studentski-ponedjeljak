@@ -3,6 +3,7 @@ import { Button } from "@mantine/core";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, logout } from "@/store/store";
 import style from "./Header.module.scss";
+import { notifications } from "@mantine/notifications";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -19,8 +20,14 @@ const Header = () => {
   };
 
   const handleLoginLogoutButton = () => {
-    if (isAuthenticated) dispatch(logout());
-    else router.push("/login");
+    if (isAuthenticated) {
+      notifications.show({
+        title: "Uspješna odjava",
+        message: "Uspješno ste se odjavili!",
+        color: "green",
+      });
+      dispatch(logout());
+    } else router.push("/login");
   };
 
   return (

@@ -14,6 +14,7 @@ import { useRouter } from "next/router";
 import type { Member } from "@/types/member";
 import { POST_assembly } from "@/services/assembliesService";
 import { GET_allMembers } from "@/services/membersService";
+import { notifications } from "@mantine/notifications";
 
 type FormData = {
   date: Date;
@@ -91,8 +92,14 @@ const AddAssembly = () => {
         members
       );
 
-      if (response.ok) router.push("/");
-      else
+      if (response.ok) {
+        router.push("/");
+        notifications.show({
+          title: "Uspješno dodano",
+          message: "Novi sastanak je uspješno dodan!",
+          color: "green",
+        });
+      } else
         setShowNotification({
           show: true,
           title: "Nešto je pošlo po krivu!",
