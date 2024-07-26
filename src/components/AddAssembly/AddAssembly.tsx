@@ -77,11 +77,14 @@ const AddAssembly = () => {
         pregnant: Number(form.pregnant) === member.id,
         arrived: selectedMemberIds.includes(member.id),
       }));
+      const pregnantFullname = members.filter(
+        (member) => String(member.id) === form.pregnant
+      )[0].fullname;
 
       const response = await POST_assembly(
         {
           date: form.date.toISOString(),
-          pregnant: form.pregnant,
+          pregnant: String(pregnantFullname),
           note: form.note || "",
           members: formattedMembers,
         },
@@ -199,8 +202,8 @@ const AddAssembly = () => {
           className={style.input}
           label="Prisutni Članovi"
           placeholder={form.members.length ? "" : "Prisutni Članovi"}
-          data={memberOptions} // Use memberOptions
-          value={form.members.map((member) => member.id.toString())} // Set selected values as IDs
+          data={memberOptions}
+          value={form.members.map((member) => member.id.toString())}
           onChange={handleMultiSelectChange}
         />
 

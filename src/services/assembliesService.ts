@@ -2,8 +2,10 @@ import type { PostAssembly } from "@/types/assembly";
 import type { Member } from "@/types/member";
 import { PUT_member } from "./membersService";
 
-export async function GET_assemblies() {
-  const response = await fetch("/api/assemblies");
+export async function GET_assemblies(page: number, perPage: number) {
+  const response = await fetch(
+    `/api/assemblies?page=${page}&perPage=${perPage}`
+  );
 
   return response;
 }

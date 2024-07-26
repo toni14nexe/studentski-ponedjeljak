@@ -63,7 +63,7 @@ const Login = () => {
           onKeyDown={getHotkeyHandler([["enter", login]])}
         />
       </Input.Wrapper>
-      <Button size="xs" onClick={login}>
+      <Button size="xs" variant="outline" onClick={login}>
         Prijava
       </Button>
 

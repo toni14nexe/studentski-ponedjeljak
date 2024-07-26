@@ -58,7 +58,7 @@ const Members = () => {
         <div className={style.buttonContainer}>
           <ActionIcon
             className={style.plusButton}
-            variant="filled"
+            variant="outline"
             onClick={goToAddMemberPage}
           >
             <IconPlus stroke={1.5} />
