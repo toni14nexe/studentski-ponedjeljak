@@ -93,7 +93,7 @@ const AddMember = () => {
     if (associated) setForm({ ...form, associated });
   };
 
-  const goToDashboard = () => {
+  const goBack = () => {
     router.back();
   };
 
@@ -144,12 +144,7 @@ const AddMember = () => {
         />
 
         <div className={style.buttonsContainer}>
-          <Button
-            size="xs"
-            variant="outline"
-            color="red"
-            onClick={goToDashboard}
-          >
+          <Button size="xs" variant="outline" color="red" onClick={goBack}>
             Odustani
           </Button>
           <Button size="xs" variant="outline" type="submit">

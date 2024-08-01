@@ -1,6 +1,6 @@
 import AddAssembly from "@/components/AddAssembly/AddAssembly";
 
-const AddAssemblyPage = () => {
+const AddAssemblyPage = (props) => {
   return <AddAssembly />;
 };
 
