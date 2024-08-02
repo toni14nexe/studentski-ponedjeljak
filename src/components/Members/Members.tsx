@@ -38,8 +38,8 @@ const Members = () => {
     setOpenedMemberId(openedMemberId === memberId ? null : memberId);
   };
 
-  const goToProfile = (memberId: number) => {
-    router.push(`/members/${memberId}`);
+  const goTo = (url: string) => {
+    router.push(url);
   };
 
   if (loading)
@@ -99,8 +99,20 @@ const Members = () => {
                     : "Ne"}
                 </span>
               </span>
-              <br />
-              <Button onClick={() => goToProfile(member.id)}>Profil</Button>
+              <div className={style.collapseButtonsWrapper}>
+                <Button
+                  onClick={() => goTo(`members/edit/${member.id}`)}
+                  variant="outline"
+                >
+                  Uredi
+                </Button>
+                <Button
+                  onClick={() => goTo(`members/${member.id}`)}
+                  variant="outline"
+                >
+                  Profil
+                </Button>
+              </div>
             </Collapse>
           </div>
         ))}

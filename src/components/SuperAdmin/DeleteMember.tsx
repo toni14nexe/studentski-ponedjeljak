@@ -1,31 +1,31 @@
 import { useState } from "react";
 import { Button, Input } from "@mantine/core";
-import { DELETE_assembly } from "@/services/assembliesService";
 import { useRouter } from "next/router";
+import { DELETE_member } from "@/services/membersService";
 
 const Reprimands = () => {
   const router = useRouter();
   let [id, setId] = useState<string>();
 
-  const deleteAssembly = () => {
-    DELETE_assembly(String(id)).then(() => router.push("/"));
+  const deleteMember = () => {
+    DELETE_member(String(id)).then(() => router.push("/"));
   };
 
   return (
     <div>
-      <h1>Obriši sastanak</h1>
+      <h1>Obriši člana</h1>
 
-      <Input.Wrapper label="ID sastanka">
+      <Input.Wrapper label="ID člana">
         <Input
           style={{ width: "200px" }}
           value={id}
           onChange={(e) => setId(e.target.value)}
-          placeholder="ID sastanka"
+          placeholder="ID člana"
         />
       </Input.Wrapper>
 
       <br />
-      <Button onClick={deleteAssembly}>Obriši</Button>
+      <Button onClick={deleteMember}>Obriši</Button>
     </div>
   );
 };

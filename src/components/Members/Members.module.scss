@@ -43,4 +43,10 @@
   .inactiveDebt {
     color: red;
   }
+
+  .collapseButtonsWrapper {
+    display: flex;
+    gap: 22px;
+    margin-top: 8px;
+  }
 }

@@ -35,3 +35,12 @@ export async function PUT_member(member: Member) {
 
   return response;
 }
+
+export async function DELETE_member(id: string) {
+  const response = await fetch(`/api/members/${id}`, {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+  });
+
+  return response;
+}

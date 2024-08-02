@@ -42,3 +42,17 @@ export async function PUT(request: Request) {
     );
   }
 }
+
+export async function DELETE(request: Request) {
+  const url = new URL(request.url);
+  const id = url.pathname.split("/").pop();
+  if (!id) {
+    return NextResponse.json({ error: "ID is required" }, { status: 400 });
+  }
+
+  const response = await prisma.member.delete({
+    where: { id: Number(id) },
+  });
+
+  return NextResponse.json(response);
+}

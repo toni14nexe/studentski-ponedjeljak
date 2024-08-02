@@ -1,30 +1,67 @@
-import { useState } from "react";
-import { Input, Button, Notification } from "@mantine/core";
+import { useEffect, useState } from "react";
+import {
+  Input,
+  Button,
+  Notification,
+  LoadingOverlay,
+  NumberInput,
+} from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
-import style from "./AddMember.module.scss";
+import style from "./EditMember.module.scss";
 import { useRouter } from "next/router";
-import { POST_member } from "@/services/membersService";
+import { GET_member, PUT_member } from "@/services/membersService";
 import { notifications } from "@mantine/notifications";
+import { Member } from "@/types/member";
 
 type FormData = {
+  id: number;
   fullname: string;
   birthday: Date;
+  pregnantTimes: number;
   associated: Date;
+  activeReprimands: number;
+  totalReprimands: number;
+  activeAbsences: number;
+  totalAbsences: number;
+  foodDebt: boolean;
 };
 
-const AddMember = () => {
+const EditMember = () => {
   const router = useRouter();
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<FormData>({
+    id: 0,
     fullname: "",
     birthday: new Date(),
+    pregnantTimes: 0,
     associated: new Date(),
+    activeReprimands: 0,
+    totalReprimands: 0,
+    activeAbsences: 0,
+    totalAbsences: 0,
+    foodDebt: false,
   });
   const [notification, setShowNotification] = useState({
     show: false,
     title: "",
     color: "",
   });
+  const [loading, setLoading] = useState(true);
+  const [activeAbsencesState, setActiveAbsencesState] = useState(0);
+  const [activeReprimandsState, setActiveReprimandsState] = useState(0);
+
+  useEffect(() => {
+    if (router.query.id) {
+      GET_member(String(router.query.id))
+        .then((response) => response.json())
+        .then((data: Member) => {
+          setForm({ ...data, birthday: new Date(), associated: new Date() });
+          setActiveAbsencesState(data.activeAbsences);
+          setActiveReprimandsState(data.activeReprimands);
+          setLoading(false);
+        });
+    }
+  }, [router.query.id]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,17 +69,22 @@ const AddMember = () => {
     const isValid = isFormDataValid(form);
 
     if (isValid) {
-      const response = await POST_member({
-        fullname: form.fullname,
+      const newTotalAbsences = form.activeAbsences - activeAbsencesState;
+      const newTotalReprimands = form.activeReprimands - activeReprimandsState;
+
+      const response = await PUT_member({
+        ...form,
         birthday: form.birthday.toISOString(),
         associated: form.associated.toISOString(),
+        totalAbsences: form.totalAbsences + newTotalAbsences,
+        totalReprimands: form.totalReprimands + newTotalReprimands,
       });
 
       if (response.ok) {
-        router.push("/");
+        router.push("/members");
         notifications.show({
-          title: "Uspješno dodano",
-          message: "Novi član je uspješno dodan!",
+          title: "Uspješno uređeno",
+          message: "Član je uspješno uređen!",
           color: "green",
         });
       } else
@@ -69,13 +111,6 @@ const AddMember = () => {
         color: "red",
       });
       return false;
-    } else if (!form.associated) {
-      setShowNotification({
-        show: true,
-        title: "Datum registracije mora biti izabran!",
-        color: "red",
-      });
-      return false;
     }
 
     return true;
@@ -85,21 +120,38 @@ const AddMember = () => {
     setForm({ ...form, fullname: event.target.value });
   };
 
+  const handlePregnantTimesChange = (value: string | number) => {
+    setForm({ ...form, pregnantTimes: Number(value) });
+  };
+
   const handleBirthdayChange = (birthday: Date | null) => {
     if (birthday) setForm({ ...form, birthday });
   };
 
-  const handleAssociatedChange = (associated: Date | null) => {
-    if (associated) setForm({ ...form, associated });
+  const handleActiveAbsencesChange = (value: string | number) => {
+    setForm({ ...form, activeAbsences: Number(value) });
+  };
+
+  const handleActiveReprimandsChange = (value: string | number) => {
+    setForm({ ...form, activeReprimands: Number(value) });
   };
 
   const goBack = () => {
     router.back();
   };
 
+  if (loading)
+    return (
+      <LoadingOverlay
+        visible={true}
+        overlayProps={{ backgroundOpacity: 0.5, color: "black" }}
+        loaderProps={{ type: "bars" }}
+      />
+    );
+
   return (
-    <div className={style.addMemberContainer}>
-      <h1>Novi Član</h1>
+    <div className={style.editMemberContainer}>
+      <h1>Uredi Člana</h1>
       <form onSubmit={handleSubmit} className={style.formWrapper}>
         <Input.Wrapper className={style.input} label="Ime i prezime *">
           <Input
@@ -127,20 +179,28 @@ const AddMember = () => {
           }
         />
 
-        <DateInput
-          className={style.input}
-          name="date"
-          valueFormat="DD.MM.YYYY."
-          value={form.birthday}
-          onChange={handleAssociatedChange}
-          label="Datum registracije *"
-          placeholder="Datum registracije"
-          previousIcon={
-            <IconChevronLeft size={20} style={{ marginRight: "10px" }} />
-          }
-          nextIcon={
-            <IconChevronRight size={20} style={{ marginLeft: "10px" }} />
-          }
+        <NumberInput
+          label="Nabebio"
+          placeholder="Nabebio"
+          defaultValue={form.pregnantTimes}
+          min={0}
+          onChange={handlePregnantTimesChange}
+        />
+
+        <NumberInput
+          label="Aktivnih izostanaka"
+          placeholder="Aktivnih izostanaka"
+          defaultValue={form.activeAbsences}
+          min={0}
+          onChange={handleActiveAbsencesChange}
+        />
+
+        <NumberInput
+          label="Aktivnih ukora"
+          placeholder="Aktivnih ukora"
+          defaultValue={form.activeReprimands}
+          min={0}
+          onChange={handleActiveReprimandsChange}
         />
 
         <div className={style.buttonsContainer}>
@@ -148,7 +208,7 @@ const AddMember = () => {
             Odustani
           </Button>
           <Button size="xs" variant="outline" type="submit">
-            Dodaj Člana
+            Uredi Člana
           </Button>
         </div>
       </form>
@@ -173,4 +233,4 @@ const AddMember = () => {
   );
 };
 
-export default AddMember;
+export default EditMember;
