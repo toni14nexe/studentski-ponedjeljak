@@ -3,3 +3,8 @@ export type Reprimand = {
   fullname: string;
   note: string;
 };
+
+export type PostReprimand = {
+  fullname: string;
+  note: string;
+};
