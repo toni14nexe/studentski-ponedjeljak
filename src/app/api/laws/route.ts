@@ -4,7 +4,7 @@ import { Law } from "@/types/law";
 
 export async function GET() {
   const laws = await prisma.law.findMany({
-    orderBy: { id: "asc" },
+    orderBy: { name: "asc" },
   });
   return NextResponse.json(laws);
 }

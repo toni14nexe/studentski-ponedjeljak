@@ -1,18 +1,15 @@
-import { useState } from "react";
-import { Input, Button, Notification } from "@mantine/core";
-import style from "./AddLaw.module.scss";
+import { useEffect, useState } from "react";
+import { Input, Button, Notification, LoadingOverlay } from "@mantine/core";
+import style from "./EditLaw.module.scss";
 import { useRouter } from "next/router";
 import { notifications } from "@mantine/notifications";
-import { POST_law } from "@/services/lawsService";
+import { Law } from "@/types/law";
+import { GET_law, PUT_law } from "@/services/lawsService";
 
-type FormData = {
-  name: string;
-  description: string;
-};
-
-const AddLaw = () => {
+const EditLaw = () => {
   const router = useRouter();
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<Law>({
+    id: 0,
     name: "",
     description: "",
   });
@@ -21,6 +18,18 @@ const AddLaw = () => {
     title: "",
     color: "",
   });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (router.query.id) {
+      GET_law(String(router.query.id))
+        .then((response) => response.json())
+        .then((data) => {
+          setForm(data);
+          setLoading(false);
+        });
+    }
+  }, [router.query.id]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,16 +37,13 @@ const AddLaw = () => {
     const isValid = isFormDataValid(form);
 
     if (isValid) {
-      const response = await POST_law({
-        name: form.name,
-        description: form.description,
-      });
+      const response = await PUT_law(form);
 
       if (response.ok) {
         router.push("/laws");
         notifications.show({
-          title: "Uspješno dodano",
-          message: "Novi zakon je uspješno dodan!",
+          title: "Uspješno uređeno",
+          message: "Zakon je uspješno uređen!",
           color: "green",
         });
       } else
@@ -49,7 +55,7 @@ const AddLaw = () => {
     }
   };
 
-  const isFormDataValid = (form: FormData) => {
+  const isFormDataValid = (form: Law) => {
     if (!form.name) {
       setShowNotification({
         show: true,
@@ -83,9 +89,18 @@ const AddLaw = () => {
     router.back();
   };
 
+  if (loading)
+    return (
+      <LoadingOverlay
+        visible={true}
+        overlayProps={{ backgroundOpacity: 0.5, color: "black" }}
+        loaderProps={{ type: "bars" }}
+      />
+    );
+
   return (
-    <div className={style.addLawContainer}>
-      <h1>Novi Zakon</h1>
+    <div className={style.editMemberContainer}>
+      <h1>Uredi Zakon</h1>
       <form onSubmit={handleSubmit} className={style.formWrapper}>
         <Input.Wrapper className={style.input} label="Naziv *">
           <Input
@@ -93,7 +108,7 @@ const AddLaw = () => {
             name="note"
             value={form.name}
             onChange={handleNameChange}
-            placeholder="Zakon 1 Stavak 1"
+            placeholder="Naziv"
           />
         </Input.Wrapper>
 
@@ -103,7 +118,7 @@ const AddLaw = () => {
             name="note"
             value={form.description}
             onChange={handleDescriptionChange}
-            placeholder="Opis..."
+            placeholder="Opis"
           />
         </Input.Wrapper>
 
@@ -112,7 +127,7 @@ const AddLaw = () => {
             Odustani
           </Button>
           <Button size="xs" variant="outline" type="submit">
-            Dodaj Zakon
+            Uredi Zakon
           </Button>
         </div>
       </form>
@@ -137,4 +152,4 @@ const AddLaw = () => {
   );
 };
 
-export default AddLaw;
+export default EditLaw;

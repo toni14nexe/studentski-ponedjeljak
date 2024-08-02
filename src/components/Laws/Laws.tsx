@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ActionIcon, LoadingOverlay, Text } from "@mantine/core";
+import { ActionIcon, Button, LoadingOverlay, Text } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
 import style from "./Laws.module.scss";
 import { useRouter } from "next/router";
@@ -22,8 +22,8 @@ const Laws = () => {
       });
   };
 
-  const goToAddLawPage = () => {
-    router.push("/laws/add");
+  const goTo = (url: string) => {
+    router.push(url);
   };
 
   if (loading)
@@ -43,7 +43,7 @@ const Laws = () => {
           <ActionIcon
             className={style.plusButton}
             variant="outline"
-            onClick={goToAddLawPage}
+            onClick={() => goTo("/laws/add")}
           >
             <IconPlus stroke={1.5} />
             Zakon
@@ -58,7 +58,11 @@ const Laws = () => {
               <b>{law.name}</b>
             </Text>
             <Text>{law.description}</Text>
-            <br />
+            <div className={style.buttonsWrapper}>
+              <Button onClick={() => goTo(`/laws/edit/${law.id}`)}>
+                Uredi
+              </Button>
+            </div>
           </div>
         ))}
       </div>

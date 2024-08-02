@@ -1,33 +1,33 @@
 import { useState } from "react";
 import { Button, Input } from "@mantine/core";
 import { useRouter } from "next/router";
-import { DELETE_member } from "@/services/membersService";
+import { DELETE_law } from "@/services/lawsService";
 
-const DeleteMember = () => {
+const DeleteLaw = () => {
   const router = useRouter();
   let [id, setId] = useState<string>();
 
-  const deleteMember = () => {
-    DELETE_member(String(id)).then(() => router.push("/"));
+  const deleteLaw = () => {
+    DELETE_law(String(id)).then(() => router.push("/"));
   };
 
   return (
     <div>
-      <h1>Obriši Člana</h1>
+      <h1>Obriši Zakon</h1>
 
-      <Input.Wrapper label="ID člana">
+      <Input.Wrapper label="ID zakona">
         <Input
           style={{ width: "200px" }}
           value={id}
           onChange={(e) => setId(e.target.value)}
-          placeholder="ID člana"
+          placeholder="ID zakona"
         />
       </Input.Wrapper>
 
       <br />
-      <Button onClick={deleteMember}>Obriši</Button>
+      <Button onClick={deleteLaw}>Obriši</Button>
     </div>
   );
 };
 
-export default DeleteMember;
+export default DeleteLaw;

@@ -3,7 +3,7 @@ import { Button, Input } from "@mantine/core";
 import { DELETE_assembly } from "@/services/assembliesService";
 import { useRouter } from "next/router";
 
-const Reprimands = () => {
+const DeleteAssembly = () => {
   const router = useRouter();
   let [id, setId] = useState<string>();
 
@@ -13,7 +13,7 @@ const Reprimands = () => {
 
   return (
     <div>
-      <h1>Obriši sastanak</h1>
+      <h1>Obriši Sastanak</h1>
 
       <Input.Wrapper label="ID sastanka">
         <Input
@@ -30,4 +30,4 @@ const Reprimands = () => {
   );
 };
 
-export default Reprimands;
+export default DeleteAssembly;

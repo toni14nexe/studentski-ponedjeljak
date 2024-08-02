@@ -10,7 +10,13 @@ const theme = createTheme({
   fontFamily: "Open Sans, sans-serif",
 });
 
-function MyApp({ Component, pageProps }) {
+function MyApp({
+  Component,
+  pageProps,
+}: {
+  Component: any | undefined;
+  pageProps: any | undefined;
+}) {
   return (
     <StoreProvider>
       <MantineProvider theme={theme}>
