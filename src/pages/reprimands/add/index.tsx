@@ -1,7 +1,7 @@
 import AddReprimand from "@/components/Reprimands/Add/AddReprimand";
 
-const AddMemberPage = (props) => {
+const AddReprimandPage = (props) => {
   return <AddReprimand />;
 };
 
-export default AddMemberPage;
+export default AddReprimandPage;

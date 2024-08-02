@@ -1,4 +1,3 @@
-// src/app/api/members/[id]/route.ts
 import { NextResponse } from "next/server";
 import prisma from "@/app/api/prisma-client";
 import type { Member } from "@/types/member";

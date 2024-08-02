@@ -105,9 +105,17 @@ const Dashboard = () => {
               <Text>Prisutni:</Text>
               {assembly.members.map((member) => (
                 <div key={member.id}>
-                  <li>{member.fullname}</li>
+                  {member.arrived && <li>{member.fullname}</li>}
                 </div>
               ))}
+              <div className={style.editButtonWrapper}>
+                <Button
+                  onClick={() => goTo(`/edit-assembly/${assembly.id}`)}
+                  variant="outline"
+                >
+                  Uredi
+                </Button>
+              </div>
             </Collapse>
           </div>
         ))}

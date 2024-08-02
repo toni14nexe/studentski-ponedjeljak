@@ -1,7 +1,7 @@
 import Reprimands from "@/components/Reprimands/Reprimands";
 
-const AddAssemblyPage = (props) => {
+const ReprimandsPage = (props) => {
   return <Reprimands />;
 };
 
-export default AddAssemblyPage;
+export default ReprimandsPage;
