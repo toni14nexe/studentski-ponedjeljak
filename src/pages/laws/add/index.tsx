@@ -1,6 +1,6 @@
 import AddLaw from "@/components/Laws/Add/AddLaw";
 
-const AddMemberPage = (props) => {
+const AddMemberPage = (props: any, _slots: any) => {
   return <AddLaw />;
 };
 

@@ -1,6 +1,6 @@
 import Laws from "@/components/Laws/Laws";
 
-const AddAssemblyPage = (props) => {
+const AddAssemblyPage = (props: any, _slots: any) => {
   return <Laws />;
 };
 

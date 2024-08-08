@@ -1,6 +1,6 @@
 import DeleteMember from "@/components/SuperAdmin/DeleteMember";
 
-const DeleteAssemblyPage = (props) => {
+const DeleteAssemblyPage = (props: any, _slots: any) => {
   return <DeleteMember />;
 };
 

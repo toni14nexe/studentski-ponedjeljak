@@ -1,6 +1,6 @@
 import DeleteLaw from "@/components/SuperAdmin/DeleteLaw";
 
-const DeleteLawPage = (props) => {
+const DeleteLawPage = (props: any, _slots: any) => {
   return <DeleteLaw />;
 };
 

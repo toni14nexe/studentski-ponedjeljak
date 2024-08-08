@@ -1,6 +1,6 @@
 import EditLaw from "@/components/Laws/Edit/EditLaw";
 
-const EditLawPage = (props) => {
+const EditLawPage = (props: any, _slots: any) => {
   return <EditLaw />;
 };
 

@@ -1,6 +1,6 @@
 import AddReprimand from "@/components/Reprimands/Add/AddReprimand";
 
-const AddReprimandPage = (props) => {
+const AddReprimandPage = (props: any, _slots: any) => {
   return <AddReprimand />;
 };
 

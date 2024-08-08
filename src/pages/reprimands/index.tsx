@@ -1,6 +1,6 @@
 import Reprimands from "@/components/Reprimands/Reprimands";
 
-const ReprimandsPage = (props) => {
+const ReprimandsPage = (props: any, _slots: any) => {
   return <Reprimands />;
 };
 
