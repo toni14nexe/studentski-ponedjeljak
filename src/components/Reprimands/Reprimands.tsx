@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ActionIcon, LoadingOverlay, Text } from "@mantine/core";
+import { ActionIcon, Button, LoadingOverlay, Text } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
 import style from "./Reprimands.module.scss";
 import { useRouter } from "next/router";
@@ -22,8 +22,8 @@ const Reprimands = () => {
       });
   };
 
-  const goToAddReprimandPage = () => {
-    router.push("/reprimands/add");
+  const goTo = (url: string) => {
+    router.push(url);
   };
 
   if (loading)
@@ -43,7 +43,7 @@ const Reprimands = () => {
           <ActionIcon
             className={style.plusButton}
             variant="outline"
-            onClick={goToAddReprimandPage}
+            onClick={() => goTo("/reprimands/add")}
           >
             <IconPlus stroke={1.5} />
             Ukor
@@ -58,6 +58,13 @@ const Reprimands = () => {
               <b>{reprimand.fullname}</b>
             </Text>
             <Text>{reprimand.note}</Text>
+            <Button
+              className={style.editButton}
+              onClick={() => goTo(`reprimands/edit/${reprimand.id}`)}
+              variant="outline"
+            >
+              Uredi
+            </Button>
             <br />
           </div>
         ))}
