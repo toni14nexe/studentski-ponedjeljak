@@ -6,8 +6,13 @@ import type { Member } from "@/types/member";
 import { GET_member, PUT_member } from "@/services/membersService";
 import { formatDate } from "@/composables/timeHelpers";
 import { notifications } from "@mantine/notifications";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 const Member = () => {
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [member, setMember] = useState<Member | null>(null);
@@ -77,7 +82,7 @@ const Member = () => {
 
       <div className={style.rowWithButton}>
         <span>Aktivnih izostanaka: {member?.activeAbsences}</span>
-        {Number(member?.activeAbsences) > 2 && (
+        {Number(member?.activeAbsences) > 2 && isAuthenticated && (
           <Button
             size="xs"
             variant="outline"
@@ -93,7 +98,7 @@ const Member = () => {
 
       <div className={style.rowWithButton}>
         <span>Aktivnih ukora: {member?.activeReprimands}</span>
-        {Number(member?.activeReprimands) > 1 && (
+        {Number(member?.activeReprimands) > 1 && isAuthenticated && (
           <Button
             size="xs"
             variant="outline"
