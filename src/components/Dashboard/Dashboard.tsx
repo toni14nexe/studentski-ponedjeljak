@@ -13,8 +13,13 @@ import { useRouter } from "next/router";
 import { GET_assemblies } from "@/services/assembliesService";
 import { formatDate } from "@/composables/timeHelpers";
 import { Assembly } from "@/types/assembly";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 const Dashboard = () => {
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
   const router = useRouter();
   const [assemblies, setAssemblies] = useState<Assembly[]>();
   const [loading, setLoading] = useState<boolean>(true);
@@ -63,30 +68,32 @@ const Dashboard = () => {
   return (
     <div>
       <div className={style.mainWrapper}>
-        <h1>Članovi</h1>
+        <h1>Sastanci</h1>
         <div className={style.buttonContainer}>
           <ActionIcon
             className={style.plusButton}
             variant="outline"
-            onClick={() => goTo("/laws")}
+            onClick={() => goTo("laws")}
           >
             Zakoni
           </ActionIcon>
           <ActionIcon
             className={style.plusButton}
             variant="outline"
-            onClick={() => goTo("/reprimands")}
+            onClick={() => goTo("reprimands")}
           >
             Ukori
           </ActionIcon>
-          <ActionIcon
-            className={style.plusButton}
-            variant="outline"
-            onClick={() => goTo("add-assembly")}
-          >
-            <IconPlus stroke={1.5} />
-            Sastanak
-          </ActionIcon>
+          {isAuthenticated && (
+            <ActionIcon
+              className={style.plusButton}
+              variant="outline"
+              onClick={() => goTo("add-assembly")}
+            >
+              <IconPlus stroke={1.5} />
+              Sastanak
+            </ActionIcon>
+          )}
         </div>
       </div>
 
@@ -109,12 +116,14 @@ const Dashboard = () => {
                 </div>
               ))}
               <div className={style.editButtonWrapper}>
-                <Button
-                  onClick={() => goTo(`/edit-assembly/${assembly.id}`)}
-                  variant="outline"
-                >
-                  Uredi
-                </Button>
+                {isAuthenticated && (
+                  <Button
+                    onClick={() => goTo(`edit-assembly/${assembly.id}`)}
+                    variant="outline"
+                  >
+                    Uredi
+                  </Button>
+                )}
               </div>
             </Collapse>
           </div>

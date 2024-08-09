@@ -2,15 +2,12 @@ import React, { useEffect } from "react";
 import Header from "@/components/Layout/Header";
 import Footer from "@/components/Layout/Footer";
 import style from "./Layout.module.scss";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState, setIsAuthenticated, logout } from "@/store/store";
+import { useDispatch } from "react-redux";
+import { setIsAuthenticated } from "@/store/store";
 import { useRouter } from "next/router";
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const dispatch = useDispatch();
-  const isAuthenticated = useSelector(
-    (state: RootState) => state.auth.isAuthenticated
-  );
   const router = useRouter();
 
   useEffect(() => {
@@ -26,6 +23,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   }, [dispatch, router]);
 
   const cleanCookie = () => {
+    dispatch(setIsAuthenticated(false));
     document.cookie =
       "authToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
   };

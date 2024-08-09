@@ -12,8 +12,13 @@ import { useRouter } from "next/router";
 import { GET_allMembers } from "@/services/membersService";
 import { Member } from "@/types/member";
 import { formatDate } from "@/composables/timeHelpers";
+import { RootState } from "@/store/store";
+import { useSelector } from "react-redux";
 
 const Members = () => {
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
   const router = useRouter();
   const [members, setMembers] = useState<Member[]>();
   const [loading, setLoading] = useState<boolean>(true);
@@ -56,14 +61,16 @@ const Members = () => {
       <div className={style.mainWrapper}>
         <h1>Članovi</h1>
         <div className={style.buttonContainer}>
-          <ActionIcon
-            className={style.plusButton}
-            variant="outline"
-            onClick={goToAddMemberPage}
-          >
-            <IconPlus stroke={1.5} />
-            Član
-          </ActionIcon>
+          {isAuthenticated && (
+            <ActionIcon
+              className={style.plusButton}
+              variant="outline"
+              onClick={goToAddMemberPage}
+            >
+              <IconPlus stroke={1.5} />
+              Član
+            </ActionIcon>
+          )}
         </div>
       </div>
 
@@ -100,12 +107,14 @@ const Members = () => {
                 </span>
               </span>
               <div className={style.collapseButtonsWrapper}>
-                <Button
-                  onClick={() => goTo(`members/edit/${member.id}`)}
-                  variant="outline"
-                >
-                  Uredi
-                </Button>
+                {isAuthenticated && (
+                  <Button
+                    onClick={() => goTo(`members/edit/${member.id}`)}
+                    variant="outline"
+                  >
+                    Uredi
+                  </Button>
+                )}
                 <Button
                   onClick={() => goTo(`members/${member.id}`)}
                   variant="outline"

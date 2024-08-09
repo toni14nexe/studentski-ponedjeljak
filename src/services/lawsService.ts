@@ -21,6 +21,8 @@ export async function GET_law(id: string) {
     headers: { "Content-Type": "application/json" },
   });
 
+  console.log(response);
+
   return response;
 }
 

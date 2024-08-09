@@ -5,8 +5,13 @@ import style from "./Laws.module.scss";
 import { useRouter } from "next/router";
 import { GET_laws } from "@/services/lawsService";
 import { Law } from "@/types/law";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 const Laws = () => {
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
   const router = useRouter();
   const [laws, setLaws] = useState<Law[]>();
   const [loading, setLoading] = useState<boolean>(true);
@@ -40,14 +45,16 @@ const Laws = () => {
       <div className={style.mainWrapper}>
         <h1>Zakoni</h1>
         <div className={style.buttonContainer}>
-          <ActionIcon
-            className={style.plusButton}
-            variant="outline"
-            onClick={() => goTo("/laws/add")}
-          >
-            <IconPlus stroke={1.5} />
-            Zakon
-          </ActionIcon>
+          {isAuthenticated && (
+            <ActionIcon
+              className={style.plusButton}
+              variant="outline"
+              onClick={() => goTo("/laws/add")}
+            >
+              <IconPlus stroke={1.5} />
+              Zakon
+            </ActionIcon>
+          )}
         </div>
       </div>
 
@@ -59,9 +66,11 @@ const Laws = () => {
             </Text>
             <Text>{law.description}</Text>
             <div className={style.buttonsWrapper}>
-              <Button onClick={() => goTo(`/laws/edit/${law.id}`)}>
-                Uredi
-              </Button>
+              {isAuthenticated && (
+                <Button onClick={() => goTo(`/laws/edit/${law.id}`)}>
+                  Uredi
+                </Button>
+              )}
             </div>
           </div>
         ))}
