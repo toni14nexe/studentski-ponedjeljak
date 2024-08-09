@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import {
   Input,
   Button,
@@ -6,6 +6,7 @@ import {
   MultiSelect,
   Notification,
   LoadingOverlay,
+  Textarea,
 } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
@@ -222,7 +223,7 @@ const EditAssembly = () => {
     return true;
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTextAreaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
@@ -289,13 +290,15 @@ const EditAssembly = () => {
           onChange={handleSelectChange}
         />
 
-        <Input.Wrapper className={style.input} label="Bilješka">
-          <Input
+        <Input.Wrapper className={style.input} label="Napomena">
+          <Textarea
             className={style.input}
             name="note"
             value={form.note}
-            onChange={handleChange}
-            placeholder="Bilješka"
+            onChange={handleTextAreaChange}
+            placeholder="Napomena"
+            autosize
+            minRows={2}
           />
         </Input.Wrapper>
 

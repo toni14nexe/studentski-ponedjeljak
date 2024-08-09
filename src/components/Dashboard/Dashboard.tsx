@@ -107,7 +107,7 @@ const Dashboard = () => {
               {formatDate(assembly.date)}
             </Button>
             <Collapse in={openedAssemblyId === assembly.id}>
-              <Text>Bilješka: {assembly.note || "Jebeš krmaču..."}</Text>
+              <Text>Napomena: {assembly.note || "Jebeš krmaču..."}</Text>
               <Text>Nabebio: {assembly.pregnant}</Text>
               <Text>Prisutni:</Text>
               {assembly.members.map((member) => (

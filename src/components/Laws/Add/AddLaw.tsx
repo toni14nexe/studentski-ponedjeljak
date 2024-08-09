@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Input, Button, Notification } from "@mantine/core";
+import { ChangeEvent, useState } from "react";
+import { Input, Button, Notification, Textarea } from "@mantine/core";
 import style from "./AddLaw.module.scss";
 import { useRouter } from "next/router";
 import { notifications } from "@mantine/notifications";
@@ -73,10 +73,8 @@ const AddLaw = () => {
     setForm({ ...form, name: event.target.value });
   };
 
-  const handleDescriptionChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setForm({ ...form, description: event.target.value });
+  const handleDescriptionChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setForm({ ...form, description: e.target.value });
   };
 
   const goBack = () => {
@@ -98,12 +96,14 @@ const AddLaw = () => {
         </Input.Wrapper>
 
         <Input.Wrapper className={style.input} label="Opis *">
-          <Input
+          <Textarea
             className={style.input}
             name="note"
             value={form.description}
             onChange={handleDescriptionChange}
             placeholder="Opis..."
+            autosize
+            minRows={2}
           />
         </Input.Wrapper>
 

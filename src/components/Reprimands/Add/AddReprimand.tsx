@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import {
   Input,
   Button,
   Notification,
   Select,
   LoadingOverlay,
+  Textarea,
 } from "@mantine/core";
 import style from "./AddReprimand.module.scss";
 import { useRouter } from "next/router";
@@ -107,8 +108,8 @@ const AddReprimand = () => {
     if (value !== null) setForm({ ...form, member: value });
   };
 
-  const handleNoteChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({ ...form, note: event.target.value });
+  const handleNoteChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setForm({ ...form, note: e.target.value });
   };
 
   const goBack = () => {
@@ -138,12 +139,14 @@ const AddReprimand = () => {
         />
 
         <Input.Wrapper className={style.input} label="Opis *">
-          <Input
+          <Textarea
             className={style.input}
             name="note"
             value={form.note}
             onChange={handleNoteChange}
             placeholder="Opis..."
+            autosize
+            minRows={2}
           />
         </Input.Wrapper>
 

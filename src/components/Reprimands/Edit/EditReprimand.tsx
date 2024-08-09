@@ -1,5 +1,11 @@
-import { useEffect, useState } from "react";
-import { Input, Button, Notification, LoadingOverlay } from "@mantine/core";
+import { ChangeEvent, useEffect, useState } from "react";
+import {
+  Input,
+  Button,
+  Notification,
+  LoadingOverlay,
+  Textarea,
+} from "@mantine/core";
 import style from "./EditReprimand.module.scss";
 import { useRouter } from "next/router";
 import { notifications } from "@mantine/notifications";
@@ -68,8 +74,8 @@ const EditReprimand = () => {
     return true;
   };
 
-  const handleNoteChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({ ...form, note: event.target.value });
+  const handleNoteChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setForm({ ...form, note: e.target.value });
   };
 
   const goBack = () => {
@@ -94,12 +100,14 @@ const EditReprimand = () => {
         </span>
 
         <Input.Wrapper className={style.input} label="Opis *">
-          <Input
+          <Textarea
             className={style.input}
             name="note"
             value={form.note}
             onChange={handleNoteChange}
             placeholder="Opis..."
+            autosize
+            minRows={2}
           />
         </Input.Wrapper>
 
