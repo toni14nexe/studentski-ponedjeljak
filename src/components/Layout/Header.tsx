@@ -27,12 +27,14 @@ const Header = () => {
         color: "green",
       });
       dispatch(logout());
+      router.push("/");
     } else router.push("/login");
   };
 
   return (
     <div className={style.headerContainer}>
-      <h3 className={style.title} onClick={titleGoTo}>
+      <h3 className={style.titleContainer} onClick={titleGoTo}>
+        <img className={style.icon} src="/favicon.png" />
         Studentski Ponedjeljak
       </h3>
       <div className={style.rightHeaderWrapper}>
