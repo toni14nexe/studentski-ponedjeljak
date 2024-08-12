@@ -1,14 +1,28 @@
 import { useState } from "react";
 import { Button, Input } from "@mantine/core";
 import { useRouter } from "next/router";
-import { DELETE_reprimand } from "@/services/reprimandsService";
+import { DELETE_reprimand, GET_reprimand } from "@/services/reprimandsService";
+import { GET_membersByUsername, PUT_member } from "@/services/membersService";
+import { Member } from "@/types/member";
 
 const DeleteReprimand = () => {
   const router = useRouter();
   let [id, setId] = useState<string>();
 
   const deleteReprimand = () => {
-    DELETE_reprimand(String(id)).then(() => router.push("/"));
+    GET_reprimand(String(id))
+      .then((response) => response.json())
+      .then((data) => {
+        GET_membersByUsername(data.fullname)
+          .then((response) => response.json())
+          .then((data: Member) => {
+            data.activeReprimands--;
+            data.totalReprimands--;
+            DELETE_reprimand(String(id));
+            PUT_member(data);
+            router.push("/");
+          });
+      });
   };
 
   return (

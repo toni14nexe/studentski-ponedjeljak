@@ -1,14 +1,33 @@
 import { useState } from "react";
 import { Button, Input } from "@mantine/core";
-import { DELETE_assembly } from "@/services/assembliesService";
+import { DELETE_assembly, GET_assembly } from "@/services/assembliesService";
 import { useRouter } from "next/router";
+import { GET_member, PUT_member } from "@/services/membersService";
+import { Member } from "@/types/member";
 
 const DeleteAssembly = () => {
   const router = useRouter();
   let [id, setId] = useState<string>();
 
   const deleteAssembly = () => {
-    DELETE_assembly(String(id)).then(() => router.push("/"));
+    GET_assembly(String(id))
+      .then((response) => response.json())
+      .then((data) => {
+        const members = JSON.parse(data.members).filter(
+          (member: any) => member.arrived
+        );
+        DELETE_assembly(String(id));
+        members.forEach((member: Member) => {
+          GET_member(String(member.id)).then((memberResponse) => {
+            memberResponse.json().then((memberData: Member) => {
+              memberData.activeAbsences--;
+              memberData.totalAbsences--;
+              PUT_member(memberData);
+              router.push("/");
+            });
+          });
+        });
+      });
   };
 
   return (

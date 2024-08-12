@@ -2,7 +2,18 @@ import { NextResponse } from "next/server";
 import prisma from "@/app/api/prisma-client";
 import type { Member } from "@/types/member";
 
-export async function GET() {
+export async function GET(request: Request) {
+  const url = new URL(request.url);
+  const fullname = url.searchParams.get("username") || undefined;
+
+  if (fullname) {
+    const member = await prisma.member.findFirst({
+      orderBy: { fullname: "asc" },
+      where: { fullname },
+    });
+    return NextResponse.json(member);
+  }
+
   const members = await prisma.member.findMany({
     orderBy: { fullname: "asc" },
   });

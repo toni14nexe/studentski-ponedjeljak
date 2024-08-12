@@ -24,6 +24,17 @@ export async function GET_reprimand(id: string) {
   return response;
 }
 
+export async function GET_reprimandsByMemberFullname(memberFullname: string) {
+  const response = await fetch(
+    `/api/reprimands?memberFullname=${memberFullname}`,
+    {
+      headers: { "Content-Type": "application/json" },
+    }
+  );
+
+  return response;
+}
+
 export async function PUT_reprimand(reprimand: Reprimand) {
   const response = await fetch(`/api/reprimands/${reprimand.id}`, {
     method: "PUT",

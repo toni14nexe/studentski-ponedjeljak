@@ -26,6 +26,14 @@ export async function GET_member(id: string) {
   return response;
 }
 
+export async function GET_membersByUsername(username: string) {
+  const response = await fetch(`/api/members?username=${username}`, {
+    headers: { "Content-Type": "application/json" },
+  });
+
+  return response;
+}
+
 export async function PUT_member(member: Member) {
   const response = await fetch(`/api/members/${member.id}`, {
     method: "PUT",

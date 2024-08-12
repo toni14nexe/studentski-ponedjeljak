@@ -122,7 +122,10 @@ const Member = () => {
               : style.inactiveDebt
           }
         >
-          {Number(member?.activeAbsences) > 2 ? "DA" : "NE"}
+          {Number(member?.activeAbsences) > 2 ||
+          Number(member?.activeReprimands) > 1
+            ? "DA"
+            : "NE"}
         </span>
       </span>
 
