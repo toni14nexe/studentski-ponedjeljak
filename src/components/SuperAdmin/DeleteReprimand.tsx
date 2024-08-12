@@ -16,12 +16,14 @@ const DeleteReprimand = () => {
         GET_membersByUsername(data.fullname)
           .then((response) => response.json())
           .then((data: Member) => {
-            data.activeReprimands--;
-            data.totalReprimands--;
-            DELETE_reprimand(String(id));
-            PUT_member(data);
-            router.push("/");
+            if (data) {
+              data.activeReprimands--;
+              data.totalReprimands--;
+              PUT_member(data);
+            }
           });
+        DELETE_reprimand(String(id));
+        router.push("/");
       });
   };
 

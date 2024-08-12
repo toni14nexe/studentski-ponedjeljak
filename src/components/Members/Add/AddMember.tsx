@@ -131,7 +131,7 @@ const AddMember = () => {
           className={style.input}
           name="date"
           valueFormat="DD.MM.YYYY."
-          value={form.birthday}
+          value={form.associated}
           onChange={handleAssociatedChange}
           label="Datum registracije *"
           placeholder="Datum registracije"

@@ -27,7 +27,15 @@
   gap: 8px;
   row-gap: 8px;
 
-  .editButton {
-    margin: 8px 0 22px 0;
+  .reprimand {
+    width: 100%;
+  }
+
+  .buttonsWrapper {
+    display: flex;
+    gap: 22px;
+    margin-top: 8px;
+    justify-content: center;
+    align-items: center;
   }
 }

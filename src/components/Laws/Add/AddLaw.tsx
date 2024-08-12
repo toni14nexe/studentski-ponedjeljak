@@ -91,7 +91,7 @@ const AddLaw = () => {
             name="note"
             value={form.name}
             onChange={handleNameChange}
-            placeholder="Zakon 1 Stavak 1"
+            placeholder="Članak 1"
           />
         </Input.Wrapper>
 

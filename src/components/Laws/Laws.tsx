@@ -60,7 +60,7 @@ const Laws = () => {
 
       <div className={style.lawsContainer}>
         {laws?.map((law) => (
-          <div key={law.id}>
+          <div className={style.law} key={law.id}>
             <Text>
               <b>{law.name}</b>
             </Text>

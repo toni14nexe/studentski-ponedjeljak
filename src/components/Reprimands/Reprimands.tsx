@@ -60,19 +60,20 @@ const Reprimands = () => {
 
       <div className={style.reprimandsContainer}>
         {reprimands?.map((reprimand) => (
-          <div key={reprimand.id}>
+          <div className={style.reprimand} key={reprimand.id}>
             <Text>
               <b>{reprimand.fullname}</b>
             </Text>
             <Text>{reprimand.note}</Text>
             {isAuthenticated && (
-              <Button
-                className={style.editButton}
-                onClick={() => goTo(`reprimands/edit/${reprimand.id}`)}
-                variant="outline"
-              >
-                Uredi
-              </Button>
+              <div className={style.buttonsWrapper}>
+                <Button
+                  onClick={() => goTo(`reprimands/edit/${reprimand.id}`)}
+                  variant="outline"
+                >
+                  Uredi
+                </Button>
+              </div>
             )}
             <br />
           </div>

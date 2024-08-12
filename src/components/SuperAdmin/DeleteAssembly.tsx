@@ -23,10 +23,10 @@ const DeleteAssembly = () => {
               memberData.activeAbsences--;
               memberData.totalAbsences--;
               PUT_member(memberData);
-              router.push("/");
             });
           });
         });
+        router.push("/");
       });
   };
 

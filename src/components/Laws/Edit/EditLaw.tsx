@@ -112,7 +112,7 @@ const EditLaw = () => {
             name="note"
             value={form.name}
             onChange={handleNameChange}
-            placeholder="Naziv"
+            placeholder="Članak 1"
           />
         </Input.Wrapper>
 
