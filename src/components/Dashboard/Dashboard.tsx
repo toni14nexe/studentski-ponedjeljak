@@ -25,20 +25,20 @@ const Dashboard = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [openedAssemblyId, setOpenedAssemblyId] = useState<number | null>(null);
   const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(5);
+  const [totalPages, setTotalPages] = useState(10);
 
   useEffect(() => getAssemblies(), []);
 
   const getAssemblies = (newPage?: number) => {
     setLoading(true);
-    GET_assemblies(newPage || page, perPage)
+    GET_assemblies(newPage || page, 10)
       .then((response) => response.json())
       .then((data) => {
         data.assemblies.forEach((assembly: any) => {
           assembly.members = JSON.parse(assembly.members);
         });
         setAssemblies(data.assemblies);
-        setPerPage(data.totalPages);
+        setTotalPages(data.totalPages);
         setLoading(false);
       });
   };
@@ -129,7 +129,11 @@ const Dashboard = () => {
           </div>
         ))}
 
-        <Pagination value={page} onChange={handlePageChange} total={perPage} />
+        <Pagination
+          value={page}
+          onChange={handlePageChange}
+          total={totalPages}
+        />
       </div>
     </div>
   );
