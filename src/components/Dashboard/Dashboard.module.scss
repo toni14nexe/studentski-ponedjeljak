@@ -30,6 +30,21 @@
   .assemblyWrapper,
   .assemblyButton {
     width: 100%;
+
+    .inbuttoContainer {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: space-between;
+
+      .rotatedIcon {
+        transform: rotate(90deg);
+      }
+
+      .iconTransition {
+        transition: transform 0.3s ease;
+      }
+    }
   }
 
   .editButtonWrapper {

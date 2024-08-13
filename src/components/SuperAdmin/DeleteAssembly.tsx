@@ -44,7 +44,9 @@ const DeleteAssembly = () => {
       </Input.Wrapper>
 
       <br />
-      <Button onClick={deleteAssembly}>Obriši</Button>
+      <Button onClick={deleteAssembly} variant="outline">
+        Obriši
+      </Button>
     </div>
   );
 };

@@ -25,7 +25,9 @@ const DeleteLaw = () => {
       </Input.Wrapper>
 
       <br />
-      <Button onClick={deleteLaw}>Obriši</Button>
+      <Button onClick={deleteLaw} variant="outline">
+        Obriši
+      </Button>
     </div>
   );
 };

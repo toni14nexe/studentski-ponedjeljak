@@ -43,7 +43,9 @@ const DeleteMember = () => {
       </Input.Wrapper>
 
       <br />
-      <Button onClick={deleteMember}>Obriši</Button>
+      <Button onClick={deleteMember} variant="outline">
+        Obriši
+      </Button>
     </div>
   );
 };

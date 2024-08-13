@@ -7,7 +7,7 @@ import {
   Pagination,
   Text,
 } from "@mantine/core";
-import { IconPlus } from "@tabler/icons-react";
+import { IconPlus, IconArrowBadgeRight } from "@tabler/icons-react";
 import style from "./Dashboard.module.scss";
 import { useRouter } from "next/router";
 import { GET_assemblies } from "@/services/assembliesService";
@@ -54,6 +54,7 @@ const Dashboard = () => {
   const handlePageChange = (page: number) => {
     setPage(page);
     getAssemblies(page);
+    setOpenedAssemblyId(null);
   };
 
   if (loading)
@@ -103,8 +104,18 @@ const Dashboard = () => {
             <Button
               className={style.assemblyButton}
               onClick={() => toggleAssemblyData(assembly.id)}
+              variant="outline"
             >
-              {formatDate(assembly.date)}
+              <div className={style.inbuttoContainer}>
+                <div />
+                {formatDate(assembly.date)}
+                <IconArrowBadgeRight
+                  className={`${style.iconTransition} ${
+                    openedAssemblyId === assembly.id ? style.rotatedIcon : ""
+                  }`}
+                  stroke={1.5}
+                />
+              </div>
             </Button>
             <Collapse in={openedAssemblyId === assembly.id}>
               <Text>Napomena: {assembly.note || "Jebeš krmaču..."}</Text>

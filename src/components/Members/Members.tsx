@@ -6,7 +6,7 @@ import {
   LoadingOverlay,
   Text,
 } from "@mantine/core";
-import { IconPlus } from "@tabler/icons-react";
+import { IconPlus, IconArrowBadgeRight } from "@tabler/icons-react";
 import style from "./Members.module.scss";
 import { useRouter } from "next/router";
 import { GET_allMembers } from "@/services/membersService";
@@ -80,8 +80,18 @@ const Members = () => {
             <Button
               className={style.memberButton}
               onClick={() => toggleMemberData(member.id)}
+              variant="outline"
             >
-              {member.fullname}
+              <div className={style.inbuttoContainer}>
+                <div />
+                {member.fullname}
+                <IconArrowBadgeRight
+                  className={`${style.iconTransition} ${
+                    openedMemberId === member.id ? style.rotatedIcon : ""
+                  }`}
+                  stroke={1.5}
+                />
+              </div>
             </Button>
             <Collapse in={openedMemberId === member.id}>
               <Text>Full Name: {member.fullname}</Text>

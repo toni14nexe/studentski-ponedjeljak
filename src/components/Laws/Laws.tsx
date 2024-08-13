@@ -67,7 +67,10 @@ const Laws = () => {
             <Text>{law.description}</Text>
             <div className={style.buttonsWrapper}>
               {isAuthenticated && (
-                <Button onClick={() => goTo(`/laws/edit/${law.id}`)}>
+                <Button
+                  onClick={() => goTo(`/laws/edit/${law.id}`)}
+                  variant="outline"
+                >
                   Uredi
                 </Button>
               )}

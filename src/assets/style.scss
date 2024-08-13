@@ -1,0 +1,31 @@
+.mantine-Pagination-control {
+  --color-primary: #228be6;
+  background-color: rgba(0, 0, 0, 0);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+
+  &[data-active="true"] {
+    color: white;
+    background-color: var(--color-primary);
+    &:hover {
+      color: white;
+      background-color: var(--color-primary);
+    }
+  }
+
+  &:hover {
+    --color-primary: #228be6;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+  }
+}
+
+button {
+  .mantine-Button-label {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

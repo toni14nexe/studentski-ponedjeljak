@@ -5,6 +5,7 @@ import { createTheme, MantineProvider } from "@mantine/core";
 import StoreProvider from "@/components/StoreProvider";
 import { Notifications } from "@mantine/notifications";
 import Head from "next/head";
+import "@/assets/style.scss";
 
 const theme = createTheme({
   fontFamily: "Open Sans, sans-serif",

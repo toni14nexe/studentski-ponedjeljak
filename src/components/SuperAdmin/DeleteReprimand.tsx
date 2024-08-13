@@ -41,7 +41,9 @@ const DeleteReprimand = () => {
       </Input.Wrapper>
 
       <br />
-      <Button onClick={deleteReprimand}>Obriši</Button>
+      <Button onClick={deleteReprimand} variant="outline">
+        Obriši
+      </Button>
     </div>
   );
 };
