@@ -28,7 +28,7 @@ function MyApp({
         <MantineProvider theme={theme}>
           <Notifications position="top-right" />
           <Layout>
-            <link rel="icon" href="../assets/favicon.ico" />
+            <link rel="icon" href="../assets/favicon.png" />
             <Component {...pageProps} />
           </Layout>
         </MantineProvider>
